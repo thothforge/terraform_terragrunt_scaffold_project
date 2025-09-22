@@ -1,0 +1,91 @@
+{
+  "name": "thoth",
+  "description": "IaC and GitOps specialist THOTH agent for IaC deployments",
+  "mcpServers": {
+     "thothctl": {
+      "command": "thothctl",
+      "args": ["mcp", "server", "--stdio"]
+    },
+
+    "git": {
+       "command": "uvx",
+      "args": ["mcp-server-git"],
+      "timeout": 30000
+    },
+    "terraform": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "hashicorp/terraform-mcp-server"
+      ]
+    },
+    "awslabs.aws-diagram-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-diagram-mcp-server"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "autoApprove": [],
+      "disabled": false
+    }
+  },
+  "tools": [
+    "fs_read",
+    "fs_write",
+    "execute_bash",
+    "use_aws",
+    "@git",
+    "@thothctl",
+    "@terraform"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "use_aws",
+    "@git/git_status",
+    "@git/git_log",
+    "@git/git_diff"
+  ],
+  "toolAliases": {
+    "@git/git_status": "status",
+    "@git/git_log": "log",
+    "@git/git_diff": "diff"
+  },
+  "toolsSettings": {
+
+    "fs_write": {
+      "allowedPaths": [
+        "stacks/**",
+        "common/**",
+        "modules/**",
+        "*.hcl",
+        "*.tf",
+        "*.tfvars",
+        "*.yaml",
+        "*.yml",
+        "*.toml",
+        "*.md",
+        "docs/**"
+      ]
+    }
+
+  },
+  "resources": [
+    "file://README.md",
+    "file://LICENSE",
+    "file://.thothcf.toml",
+    "file://root.hcl",
+    "file://common/common.hcl",
+    "file://common/variables.tf",
+    "file://.tflint.hcl",
+    "file://.pre-commit-config.yaml",
+    "file://.gitignore",
+    "file://stacks/**/*.hcl",
+    "file://stacks/**/*.tf",
+    "file://docs/**/*.md"
+  ]
+
+}

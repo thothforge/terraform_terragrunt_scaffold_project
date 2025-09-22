@@ -1,0 +1,33 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: terraform_terragrunt_scaffold_project
+    project_properties:
+      backend_bucket: tf-state
+      backend_region: us-east-2
+      client: thoth
+      dynamodb_backend: db-terraform-lock
+      environment: dev
+      owner: thoth
+      project: terraform_terragrunt_scaffold
+      region: us-east-2
+  description: IaC project for terraform_terragrunt_scaffold_project
+  name: terraform_terragrunt_scaffold_project
+  tags:
+  - devops
+  - devsecops
+  - iac
+  - terraform
+  - terragrunt
+  - module
+  - aws
+  - cloud
+  - automation
+  - template
+spec:
+  lifecycle: production
+  owner: IaCPlatform
+  system: IaCPlatform
+  type: template

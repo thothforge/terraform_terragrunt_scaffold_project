@@ -1,0 +1,9 @@
+site_name: 'terragrunt_project_scaffold'
+nav:
+  - Home: ./index.md
+  - Guidelines:
+    - Architecture Definition: ./guidelines/architecture-definition.md
+    - IaC Composition Guidelines: ./guidelines/iac-composition-guidelines.md
+  - Changelog: ./changelog.md
+plugins:
+  - techdocs-core
