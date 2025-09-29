@@ -40,6 +40,8 @@ dependency "vpc" {
   mock_outputs = {
     vpc_id = "vpc-mock"
   }
+    mock_outputs_merge_strategy_with_state = "shallow"
+
 }
 
 locals {
