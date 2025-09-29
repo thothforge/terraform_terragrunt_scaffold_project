@@ -1,13 +1,3 @@
-[project_properties]
-project = "terraform_terragrunt_scaffold"
-environment = "dev"
-owner = "thoth"
-client = "thoth"
-backend_region = "us-east-2"
-dynamodb_backend = "db-terraform-lock"
-backend_bucket = "tf-state"
-region = "us-east-2"
-
 [thothcf]
 project_id = "terraform_terragrunt_scaffold_project"
 project_type = "terraform"

@@ -2,4 +2,4 @@
 project = "test-wrapper"
 environment = "dev"
 owner = "thothctl"
-region = "us-east-2"
+region = "#{deployment_region}#"

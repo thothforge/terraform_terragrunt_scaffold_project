@@ -2,23 +2,23 @@
 # Load variables in locals
 locals {
   # Default values for variables
-  profile           = "default"
-  project           = "test-wrapper"
-  deployment_region = "us-east-2"
-  provider          = "aws"
+  profile           = "#{deployment_profile}#"
+  project           = "#{project_name}#"
+  deployment_region = "#{deployment_region}#"
+  provider          = "#{cloud_provider}#"
   client = "thothctl"
 
   # Set tags according to company policies
   tags = {
-    ProjectCode = "test-wrapper"
+    ProjectCode = "#{project_name}#"
     Framework   = "DevSecOps-IaC"
   }
 
   # Backend Configuration
-  backend_region        = "us-east-2"
-  backend_bucket_name   = "test-wrapper-tfstate"
-  backend_profile       = "default"
-  backend_dynamodb_lock = "db-terraform-lock"
+  backend_region        = "#{deployment_region}#"
+  backend_bucket_name   = "#{project_name}#-tfstate"
+  backend_profile       = "#{deployment_profile}#"
+  backend_dynamodb_lock = "#{backend_dynamodb}#"
   backend_key           = "terraform.tfstate"
   backend_encrypt = true
   # format cloud provider/client/projectname
@@ -33,7 +33,7 @@ generate "provider" {
 variable "required_tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
-  default     = {}
+  #{deployment_profile}#     = {}
 }
 variable "project" {
   type        = string
@@ -41,18 +41,18 @@ variable "project" {
 }
 variable "profile" {
   description = "Variable for credentials management."
-  default = {
-    default = {
-      profile = "default"
-      region = "us-east-2"
+  #{deployment_profile}# = {
+    #{deployment_profile}# = {
+      profile = "#{deployment_profile}#"
+      region = "#{deployment_region}#"
 }
     dev  = {
-      profile = "default"
-      region = "us-east-2"
+      profile = "#{deployment_profile}#"
+      region = "#{deployment_region}#"
 }
     prod = {
-      profile = "default"
-      region = "us-east-2"
+      profile = "#{deployment_profile}#"
+      region = "#{deployment_region}#"
     
 }
   }
@@ -60,11 +60,11 @@ variable "profile" {
 }
 
 
-provider "aws" {
+provider "#{cloud_provider}#" {
   region  = var.profile[terraform.workspace]["region"]
   profile = var.profile[terraform.workspace]["profile"]
 
-  default_tags {
+  #{deployment_profile}#_tags {
     tags = var.required_tags
 
 }
