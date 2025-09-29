@@ -72,6 +72,7 @@ inputs = {
 - [ ] Mock outputs are provided for all dependencies
 - [ ] Environment-specific configuration uses locals pattern
 - [ ] Security best practices are followed
+- [ ] Use latest version available for new stacks components
 
 ### Mandatory Tags
 
@@ -86,3 +87,88 @@ All resources must include:
 - Enable encryption at rest and in transit
 - Implement proper network segmentation
 - Follow AWS security best practices
+
+
+
+### 3. Security Requirements
+
+#### IAM Roles
+- Use least privilege principle
+- Attach only necessary AWS managed policies
+- Avoid inline policies unless required
+- Enable MFA for sensitive roles
+
+#### Network Security
+- Use security groups over NACLs
+- Implement defense in depth
+- Enable VPC Flow Logs
+- Use private subnets for workloads
+
+#### Data Protection
+- Enable encryption at rest and in transit
+- Use AWS KMS for key management
+- Implement backup strategies
+- Enable versioning for S3 buckets
+
+## Agent Guidelines
+
+### Stack Creation Rules
+When creating new stacks, the agent must:
+
+1. **Validate Module Source**: Ensure using approved modules from the list above
+2. **Check Version Compatibility**: Use latest stable version unless specified
+3. **Apply Naming Convention**: Follow project-environment-resource pattern
+4. **Include Required Tags**: All mandatory tags must be present
+5. **Configure Dependencies**: Explicitly declare all dependencies
+6. **Add Documentation**: Include README.md with module purpose and usage
+
+### Module Research Process
+1. **Search Official Modules**: Always start with `terraform-aws-modules`
+2. **Verify Module Compatibility**: Check Terraform and provider version requirements
+3. **Review Module Documentation**: Understand inputs, outputs, and examples
+4. **Select Appropriate Submodule**: Use specific submodules when available
+5. **Use latest Version for new stack components**: Use the latest or more recent version published for each module
+
+### Dependency Management Rules
+1. **Use `dependency` blocks**: Never use `dependencies` for cross-stack references
+2. **Include Mock Outputs**: Always provide mock outputs for safe planning
+3. **Set Mock Strategy**: Use `mock_outputs_merge_strategy_with_state = "shallow"`
+4. **Relative Paths**: Use relative paths from current stack location
+5. **Output References**: Reference dependency outputs as `dependency.{name}.outputs.{output}`
+
+
+## Prohibited Practices
+
+### ❌ Avoid These Patterns
+- Using unverified community modules
+- Hardcoded values instead of variables
+- Missing version constraints
+- Inline policies for IAM roles
+- Public subnets for workloads
+- Unencrypted storage resources
+- Missing or incomplete tags
+
+### ✅ Required Practices
+- Official AWS modules only
+- Version pinning for all modules
+- Consistent naming conventions
+- Comprehensive tagging strategy
+- Explicit dependency declarations
+- Security-first configurations
+- Complete documentation
+
+## Compliance & Governance
+
+### Module Approval Process
+1. **Research**: Identify official module for use case
+2. **Validation**: Verify module meets security requirements
+3. **Testing**: Test in development environment
+4. **Documentation**: Update this guideline if new module approved
+5. **Implementation**: Deploy following established patterns
+
+### Regular Reviews
+- **Monthly**: Review for new module versions
+- **Quarterly**: Security and compliance audit
+- **Annually**: Architecture and pattern review
+
+This guideline ensures consistent, secure, and maintainable infrastructure code across all environments and teams.
