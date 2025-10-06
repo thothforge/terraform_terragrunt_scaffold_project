@@ -6,7 +6,14 @@
       "command": "thothctl",
       "args": ["mcp", "server", "--stdio"]
     },
-
+    "aws-knowledge-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "fastmcp",
+        "run",
+        "https://knowledge-mcp.global.api.aws"
+      ]
+    },
     "git": {
        "command": "uvx",
       "args": ["mcp-server-git"],
