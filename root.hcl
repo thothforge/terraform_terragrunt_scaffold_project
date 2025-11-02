@@ -26,6 +26,15 @@ terraform {
       "-var-file=${get_parent_terragrunt_dir()}/common/common.tfvars"
 
     ]
+     optional_var_files = [
+       ## overwrite to use in pipeline setup is created by by ci job
+      "${get_parent_terragrunt_dir()}/overwrite.auto.tfvars",
+
+      "${get_parent_terragrunt_dir()}/environments/${get_env("environment", "dev")}/applications.tfvars",
+      "${get_parent_terragrunt_dir()}/environments/${get_env("environment", "dev")}/foundations.tfvars",
+      "${get_parent_terragrunt_dir()}/environments/${get_env("environment", "dev")}/observability.tfvars",
+      "${get_parent_terragrunt_dir()}/environments/${get_env("environment", "dev")}/platform.tfvars",
+     ]
   }
 
 

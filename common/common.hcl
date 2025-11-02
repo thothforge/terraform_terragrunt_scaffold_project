@@ -8,6 +8,7 @@ locals {
   provider          = "#{cloud_provider}#"
   client = "thothctl"
 
+  environment = get_env("TF_VAR_ENVIRONMENT", "dev")
   # Set tags according to company policies
   tags = {
     ProjectCode = "#{project_name}#"
