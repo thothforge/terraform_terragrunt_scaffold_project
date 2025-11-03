@@ -1,5 +1,5 @@
 
 project = "#{project_name}#"
 environment = "#{environment}#"
-owner = "thothctl"
+owner = "#{owner}#"
 region = "#{deployment_region}#"
