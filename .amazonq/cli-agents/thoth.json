@@ -92,7 +92,8 @@
     "file://.pre-commit-config.yaml",
     "file://.gitignore",
     "file://stacks/**/*.hcl",
-    "file://docs/**/*.md"
+    "file://docs/**/*.md",
+     ".amazonq/rules/**/*.md"
   ]
 
 }
