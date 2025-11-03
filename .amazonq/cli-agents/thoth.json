@@ -92,7 +92,6 @@
     "file://.pre-commit-config.yaml",
     "file://.gitignore",
     "file://stacks/**/*.hcl",
-    "file://stacks/**/*.tf",
     "file://docs/**/*.md"
   ]
 
