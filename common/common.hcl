@@ -17,7 +17,7 @@ locals {
 
   # Backend Configuration
   backend_region        = "#{deployment_region}#"
-  backend_bucket_name   = "#{project_name}#-tfstate"
+  backend_bucket_name   = "#{backend_bucket}#"
   backend_profile       = "#{deployment_profile}#"
   backend_dynamodb_lock = "#{backend_dynamodb}#"
   backend_key           = "terraform.tfstate"
