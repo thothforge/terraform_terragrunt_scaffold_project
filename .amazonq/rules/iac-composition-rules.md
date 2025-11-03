@@ -267,3 +267,34 @@ inputs = {
 5. **Implementation**: Deploy following established patterns
 
 These rules ensure consistent, secure, and maintainable infrastructure code in the Terraform/Terragrunt hybrid approach while enabling Amazon Q to provide automated enforcement and guidance.
+
+## Stacks terrafrom + terragrunt structure example
+
+```bash
+stacks/application/
+├── compute
+│   ├── alb
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   ├── terragrunt.hcl
+│   │   └── variables.tf
+│   └── asg
+│       ├── main.tf
+│       ├── outputs.tf
+│       ├── terragrunt.hcl
+│       └── variables.tf
+└── storage
+    ├── efs
+    │   ├── main.tf
+    │   ├── outputs.tf
+    │   ├── terragrunt.hcl
+    │   └── variables.tf
+    └── s3
+        ├── main.tf
+        ├── outputs.tf
+        ├── terragrunt.hcl
+        └── variables.tf
+
+7 directories, 16 files
+
+```
