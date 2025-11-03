@@ -66,16 +66,6 @@ dependency "vpc" {
   mock_outputs_merge_strategy_with_state = "shallow"
 }
 
-locals {
-  environment_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  env = local.environment_vars.locals.environment
-  
-  common_tags = {
-    Environment = local.env
-    Project     = "terraform-terragrunt-scaffold"
-    ManagedBy   = "terragrunt"
-  }
-}
 
 inputs = {
   vpc_id = dependency.vpc.outputs.vpc_id
