@@ -247,6 +247,36 @@ inputs = {
 - [ ] Security best practices are followed
 - [ ] Latest version available for new stack components
 
+
+**VIOLATION CONDITIONS**:
+- Missing required files (main.tf, variables.tf, outputs.tf, versions.tf, README.md)
+- Incorrect module source path format
+- Missing provider version constraints
+- Undocumented variables or outputs
+- Missing tags variable with default empty map
+
+**ENFORCEMENT ACTIONS**:
+- **BLOCK**: Incomplete module structure
+- **REQUIRE**: Proper documentation before usage
+- **WARN**: Using local modules when terraform-aws-modules alternative exists
+
+### Module Creation Checklist:
+- [ ] Complete file structure (main.tf, variables.tf, outputs.tf, versions.tf, README.md)
+- [ ] Provider version constraints defined
+- [ ] All variables documented with descriptions and types
+- [ ] Tags variable included with default empty map
+- [ ] All outputs documented with descriptions
+- [ ] README.md includes usage examples and requirements table
+- [ ] Module follows organization naming conventions
+- [ ] Example usage provided in documentation
+
+### Preferred Module Hierarchy:
+1. **First Choice**: terraform-aws-modules (official AWS modules)
+2. **Second Choice**: Well-maintained community modules
+3. **Last Resort**: Local modules for organization-specific patterns
+
+**NOTE**: Always justify why terraform-aws-modules cannot fulfill the requirement before creating local modules.
+
 ## Prohibited Practices
 
 ### ❌ Avoid These Patterns
