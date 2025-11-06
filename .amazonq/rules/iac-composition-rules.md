@@ -202,6 +202,7 @@ inputs = {
 - R004: Invalid terragrunt configuration
 - R005: Missing mock outputs
 - R012: Incorrect dependency references
+- R013: Local Module Structure and Usage when the module is not public available in approval official registries sources
 
 ## Agent Behavior Rules
 
@@ -224,6 +225,14 @@ inputs = {
 2. Verify module compatibility with Terraform version
 3. Use latest stable version for new components
 4. Select appropriate submodules when available
+
+### When creating a local module 
+
+1. Purpose: Use for organization-specific patterns not available in terraform-official certificate modules
+2. Naming: Use kebab-case for module directories
+3. Documentation: Include comprehensive README.md with examples
+4. Testing: Include example usage in examples/ subdirectory
+5. Versioning: Use Git tags for version management
 
 ## Validation Checklist
 
@@ -298,3 +307,21 @@ stacks/application/
 7 directories, 16 files
 
 ```
+
+
+RULE: Local modules must follow standardized structure and usage patterns
+ENFORCEMENT: Block non-compliant local module implementations
+
+Required Local Module Structure:
+```bash 
+modules/
+├── {module-name}/
+│   ├── main.tf          # Resource definitions
+│   ├── variables.tf     # Input variable definitions  
+│   ├── outputs.tf       # Output value definitions
+│   ├── versions.tf      # Provider version constraints
+│   └── README.md        # Module documentation
+
+```
+
+
