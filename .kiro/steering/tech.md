@@ -37,12 +37,13 @@ terragrunt destroy
 ### Multi-stack Operations
 ```bash
 # Run command across all stacks
-terragrunt run-all plan
-terragrunt run-all apply
-terragrunt run-all destroy
+terragrunt run --all plan
+terragrunt run --all apply
+terragrunt run --all destroy
+
 
 # Run command for specific layer
-cd stacks/foundation && terragrunt run-all plan
+terragrunt run --all --working-dir stacks/foundation -- plan
 ```
 
 ### Validation & Linting
