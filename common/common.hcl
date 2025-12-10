@@ -6,7 +6,7 @@ locals {
   project           = "#{project_name}#"
   deployment_region = "#{deployment_region}#"
   provider          = "#{cloud_provider}#"
-  client = "thothctl"
+  client = "#{client}#"
 
   environment = get_env("TF_VAR_ENVIRONMENT", "dev")
   # Set tags according to company policies
@@ -65,7 +65,7 @@ provider "#{cloud_provider}#" {
   region  = var.profile[terraform.workspace]["region"]
   profile = var.profile[terraform.workspace]["profile"]
 
-  #{deployment_profile}#_tags {
+  required_tags {
     tags = var.required_tags
 
 }
