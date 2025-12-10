@@ -93,7 +93,7 @@
     "file://.gitignore",
     "file://stacks/**/*.hcl",
     "file://docs/**/*.md",
-     "file://.amazonq/rules/*.md"
+     "file://.kiro/steering/*.md"
   ]
 
 }
