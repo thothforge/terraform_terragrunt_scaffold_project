@@ -52,7 +52,7 @@ stacks/{layer}/{domain}/{service}/
 ### Layers (in dependency order)
 1. **foundation**: Core infrastructure (VPC, IAM, Security Groups)
 2. **platform**: Shared services (EKS, RDS, ElastiCache, ECR)
-3. **application**: Application-specific resources (ALB, ASG, S3, EFS)
+3. **application**: Application-specific resources (ALB, ASG, S3, EFS, EC2)
 4. **observability**: Monitoring and logging (CloudWatch, Prometheus)
 
 ## Dependency Rules
