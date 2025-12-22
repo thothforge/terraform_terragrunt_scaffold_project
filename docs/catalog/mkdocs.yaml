@@ -1,0 +1,42 @@
+site_name: Terraform Terragrunt Scaffold Project
+site_description: Infrastructure as Code documentation for GitOps at scale
+docs_dir: docs
+site_dir: site
+
+nav:
+  - Home: index.md
+  - Guidelines:
+      - Architecture Definition: guidelines/architecture-definition.md
+  - Changelog: changelog.md
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.details
+
+plugins:
+  - search
+  - mkdocs-simple-hooks:
+      hooks:
+        on_pre_build: "docs.hooks:copy_images"
+
+extra_css:
+  - stylesheets/extra.css

@@ -65,7 +65,7 @@ provider "#{cloud_provider}#" {
   region  = var.profile[terraform.workspace]["region"]
   profile = var.profile[terraform.workspace]["profile"]
 
-  required_tags {
+  default_tags {
     tags = var.required_tags
 
 }
