@@ -14,8 +14,9 @@ Each stack **MUST** contain these required files:
 
 ### Approved Module Sources (in order of preference):
 1. **terraform-aws-modules** (official AWS modules) - `terraform-aws-modules/vpc/aws`
-2. **Git repositories** - `git::https://github.com/...`
-3. **Local modules** - `./modules/module-name` (last resort only)
+2. **terraform-aws-ia-modules** (official AWS IA modules) - aws-ia/
+3. **Git repositories** - `git::https://github.com/...`
+4. **Local modules** - `./modules/module-name` (last resort only)
 
 ### Version Pinning Required:
 ```hcl
