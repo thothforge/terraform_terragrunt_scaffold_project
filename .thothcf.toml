@@ -4,7 +4,7 @@ project_type = "terraform"
 
 [template_input_parameters.project_name]
 template_value = "test-wrapper"
-condition = "^[a-zA-Z0-9\\-]+\\[[^\\]]+\\]$"
+condition = "^[a-zA-Z0-9\\-]+$"
 description = "Project Name"
 
 [template_input_parameters.deployment_region]
@@ -24,12 +24,12 @@ description = "Backend Aws Region"
 
 [template_input_parameters.owner]
 template_value = "thothctl"
-condition = "08[a-zA-Z]+x08"
+condition = "^[a-zA-Z0-9\\-]+$"
 description = "Team or role owner for this deployment"
 
 [template_input_parameters.client]
 template_value = "thothctl"
-condition = "08[a-zA-Z]+x08"
+condition = "^[a-zA-Z0-9\\-]+$"
 description = "Client or Area for this deployment"
 
 [template_input_parameters.backend_dynamodb]
