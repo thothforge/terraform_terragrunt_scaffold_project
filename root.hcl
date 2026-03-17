@@ -30,10 +30,10 @@ terraform {
        ## overwrite to use in pipeline setup is created by by ci job
       "${get_parent_terragrunt_dir()}/overwrite.auto.tfvars",
 
-      "${get_parent_terragrunt_dir()}/environments/${get_env("environment", "dev")}/applications.tfvars",
-      "${get_parent_terragrunt_dir()}/environments/${get_env("environment", "dev")}/foundations.tfvars",
-      "${get_parent_terragrunt_dir()}/environments/${get_env("environment", "dev")}/observability.tfvars",
-      "${get_parent_terragrunt_dir()}/environments/${get_env("environment", "dev")}/platform.tfvars",
+      "${get_parent_terragrunt_dir()}/environments/${get_env("TF_VAR_ENVIRONMENT", "dev")}/applications.tfvars",
+      "${get_parent_terragrunt_dir()}/environments/${get_env("TF_VAR_ENVIRONMENT", "dev")}/foundations.tfvars",
+      "${get_parent_terragrunt_dir()}/environments/${get_env("TF_VAR_ENVIRONMENT", "dev")}/observability.tfvars",
+      "${get_parent_terragrunt_dir()}/environments/${get_env("TF_VAR_ENVIRONMENT", "dev")}/platform.tfvars",
      ]
   }
 
