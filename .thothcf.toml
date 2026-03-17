@@ -4,7 +4,7 @@ project_type = "terraform"
 
 [template_input_parameters.project_name]
 template_value = "test-wrapper"
-condition = "08[a-zA-Z]+x08"
+condition = "^[a-zA-Z0-9\\-]+\\[[^\\]]+\\]$"
 description = "Project Name"
 
 [template_input_parameters.deployment_region]
