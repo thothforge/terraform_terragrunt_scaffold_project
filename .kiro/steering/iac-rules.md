@@ -53,6 +53,29 @@ inputs = {
 }
 ```
 
+## Terraform Configuration Pattern Values for each Environment (R004.1)
+
+All values for each environment must be defined in the respectively .`tfvars` file in `environment` folder and layer
+```bash
+environments/
+├── dev
+│   ├── applications.tfvars
+│   ├── foundations.tfvars
+│   ├── observability.tfvars
+│   └── platform.tfvars
+├── prd
+│   ├── applications.tfvars
+│   ├── foundations.tfvars
+│   ├── observability.tfvars
+│   └── platform.tfvars
+└── qa
+    ├── applications.tfvars
+    ├── foundations.tfvars
+    ├── observability.tfvars
+    └── platform.tfvars
+
+
+```
 ## Dependency Management (R005)
 
 All dependencies **MUST** include:
