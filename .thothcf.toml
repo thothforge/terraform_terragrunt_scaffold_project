@@ -39,7 +39,7 @@ description = "Dynamodb for lock state"
 
 [template_input_parameters.environment]
 template_value = "dev"
-condition = "(dev|qa|stg|test|prod)"
+condition = "(dev|qa|stg|test|prod|prd)"
 description = "The environment or workspace name for initial setup. Environment allowed values (dev|qa|stg|test|prod)"
 
 [template_input_parameters.cloud_provider]
