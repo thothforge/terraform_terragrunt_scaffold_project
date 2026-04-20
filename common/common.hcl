@@ -42,7 +42,7 @@ variable "project" {
 }
 variable "profile" {
   description = "Variable for credentials management."
-  #{deployment_profile}# = {
+  default = {
     #{deployment_profile}# = {
       profile = "#{deployment_profile}#"
       region = "#{deployment_region}#"
