@@ -56,3 +56,8 @@ description = "Deployment profile aws cli"
 template_value = "default"
 condition = "^[a-zA-Z0-9_.-]{3,255}$"
 description = "Backend profile for s3 remote state"
+
+[context_sources]
+description = "Architecture/OpenSpec definition files to use as Kiro steering docs"
+target = ".kiro/steering"
+supported_extensions = [".md", ".yaml", ".yml", ".txt"]

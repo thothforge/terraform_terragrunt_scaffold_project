@@ -34,7 +34,7 @@ generate "provider" {
 variable "required_tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
-  #{deployment_profile}#     = {}
+  default     = {}
 }
 variable "project" {
   type        = string
