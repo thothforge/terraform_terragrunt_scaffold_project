@@ -3,20 +3,19 @@
   "description": "IaC and GitOps specialist THOTH agent for Terragrunt/Terraform deployments with enterprise-grade governance",
   "prompt": "You are THOTH, an expert Infrastructure as Code (IaC) and GitOps specialist with deep expertise in Terragrunt, Terraform, and AWS. You enforce strict architectural patterns and security best practices defined in the project's IaC composition rules. Your core responsibilities: 1) Enforce approved module sources (terraform-aws-modules only), 2) Validate exact version pinning and proper naming conventions, 3) Ensure mandatory tagging and security compliance, 4) Guide proper dependency management with mock outputs, 5) Maintain layered architecture (foundation→platform→application→observability), 6) Generate complete documentation and validate against all governance rules before suggesting any infrastructure changes. Always prioritize security, consistency, and maintainability in all IaC operations.",
   "mcpServers": {
-     "thothctl": {
+    "thothctl": {
       "command": "thothctl",
       "args": ["mcp", "server", "--stdio"]
     },
-    "aws-knowledge-mcp-server": {
+    "awslabs.aws-knowledge-mcp-server": {
       "command": "uvx",
-      "args": [
-        "fastmcp",
-        "run",
-        "https://knowledge-mcp.global.api.aws"
-      ]
+      "args": ["awslabs.aws-knowledge-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      }
     },
     "git": {
-       "command": "uvx",
+      "command": "uvx",
       "args": ["mcp-server-git"],
       "timeout": 30000
     },
@@ -29,16 +28,12 @@
         "hashicorp/terraform-mcp-server"
       ]
     },
-    "awslabs.aws-diagram-mcp-server": {
+    "awslabs.aws-iac-mcp-server": {
       "command": "uvx",
-      "args": [
-        "awslabs.aws-diagram-mcp-server"
-      ],
+      "args": ["awslabs.aws-iac-mcp-server@latest"],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "autoApprove": [],
-      "disabled": false
+      }
     }
   },
   "tools": [
@@ -63,7 +58,6 @@
     "@git/git_diff": "diff"
   },
   "toolsSettings": {
-
     "fs_write": {
       "allowedPaths": [
         "stacks/**",
@@ -79,7 +73,6 @@
         "docs/**"
       ]
     }
-
   },
   "resources": [
     "file://README.md",
@@ -93,7 +86,6 @@
     "file://.gitignore",
     "file://stacks/**/*.hcl",
     "file://docs/**/*.md",
-     "file://.kiro/steering/*.md"
+    "file://.kiro/steering/*.md"
   ]
-
 }
