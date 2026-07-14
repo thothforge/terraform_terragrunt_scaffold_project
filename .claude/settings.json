@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(thothctl:*)",
+      "Bash(terraform:*)",
+      "Bash(terragrunt:*)",
+      "Bash(tofu:*)",
+      "Bash(tflint:*)",
+      "Bash(git:*)"
+    ]
+  }
+}
