@@ -8,6 +8,11 @@ inputs = {
 }
 
 terraform {
+  # Terragrunt 1.x: Use the project root as source with double-slash so that
+  # relative paths to local modules (e.g. ../../../../modules/...) resolve correctly.
+  # The part before // is downloaded/copied, the part after // is the working directory.
+  source = "${get_parent_terragrunt_dir()}//${path_relative_to_include()}"
+
   extra_arguments "init_arg" {
     commands  = ["init"]
     arguments = [
