@@ -26,3 +26,22 @@ This scaffold can be adapted for any infrastructure deployment scenario:
 - **Hybrid Cloud**: Multi-cloud and on-premises integration scenarios
 
 The project serves as a flexible scaffold that organizations can customize for their specific infrastructure needs while maintaining DevSecOps best practices and automation standards.
+
+## Tooling & Workflow Authority
+
+**ThothCTL is the authoritative framework and workflow for this scaffold.** All IaC lifecycle
+activities — validation, security scanning, policy/compliance, cost, blast-radius, plan
+validation, drift, inventory/SBOM, documentation, and intent-based generation — are performed
+through ThothCTL tools, which wrap and govern the underlying tools (Checkov, Trivy, KICS,
+OPA/Conftest, terraform-compliance, terraform-docs, cost, drift) with org policy, unified
+reporting, and enforcement gates.
+
+Do **not** call the wrapped tools directly (e.g. bare `checkov`, `tflint`, `terraform-docs`,
+`infracost`) when a ThothCTL command exists. Raw `terraform`/`terragrunt` remain in use only for
+state mechanics (`init`, `plan` artifact generation, `apply`, `fmt`).
+
+Canonical flow: `generate → develop → build → plan → test → secure → deploy → monitor`
+(run via `thothctl workflow devsecops --phase <phase>`).
+
+See the `thothctl-framework` skill for the authoritative tool boundary and the `devsecops` skill
+for phase execution detail.

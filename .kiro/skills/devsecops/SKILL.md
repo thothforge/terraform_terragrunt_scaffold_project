@@ -1,5 +1,9 @@
 # ThothCTL DevSecOps Workflow Skill
 
+> **Authority:** ThothCTL is the mandatory framework for this scaffold. See the
+> `thothctl-framework` skill for the tool boundary (which activities must use a ThothCTL tool vs.
+> raw terraform/terragrunt). This skill covers phase **execution**.
+
 ## Purpose
 
 Guide developers through the complete DevSecOps SDLC for Infrastructure as Code using ThothCTL. Orchestrate phases intelligently based on project context, provide remediation guidance on failures, and enforce organizational security policies.
