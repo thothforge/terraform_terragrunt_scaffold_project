@@ -94,6 +94,38 @@ common_tags = {
 }
 ```
 
+## Reserved / Auto-Generated Variables (R007)
+
+Terragrunt auto-generates a `provider.tf` file in **every stack** at runtime from the
+`generate "provider"` block in `common/common.hcl`. That generated file **already declares**
+the following variables:
+
+- `variable "project"`
+- `variable "profile"`
+- `variable "required_tags"`
+
+### ❌ Never re-declare these in a stack's `variables.tf`
+Doing so causes Terraform to fail with:
+```
+Error: Duplicate variable declaration
+A variable named "project" (or "profile"/"required_tags") was already declared.
+```
+
+### ✅ Rules for the generated variables
+- **Do NOT** declare `project`, `profile`, or `required_tags` in any stack `variables.tf`
+  (or in `common/variables.tf`, or in local modules that are used as the stack root).
+- **Do** reference them freely (e.g. `var.project`, `var.required_tags`) — they exist at plan/apply
+  time because `provider.tf` is generated before Terraform runs.
+- Their **values** come from `common/common.tfvars` and the `environments/<env>/*.tfvars` files,
+  wired in by `root.hcl`. Do not add default values for them anywhere.
+- Only declare stack-specific variables in `variables.tf` (e.g. `vpc_cidr`, `instance_type`).
+- Tags: use `var.required_tags` for the provider `default_tags`; only add a stack-local tags
+  variable if you need tags **beyond** the required set, and give it a distinct name (e.g.
+  `additional_tags`).
+
+If a module input needs `project`/`profile`/`required_tags`, pass `var.<name>` through
+`inputs` in `terragrunt.hcl` or directly in `main.tf` — never by re-declaring the variable.
+
 ## Security Requirements (R008-R010)
 
 ### IAM Security:

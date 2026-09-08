@@ -59,6 +59,17 @@ Never run `terraform destroy` (targeted or full) without first running `terrafor
 
 **Don't use for:** basic HCL syntax questions Claude already knows, provider API reference (link to docs), cloud-platform questions unrelated to Terraform/OpenTofu.
 
+## Project Constraint — Terragrunt-Generated `provider.tf` (this scaffold)
+
+This scaffold's `common/common.hcl` has a `generate "provider"` block that writes a `provider.tf`
+into **every stack** at Terragrunt runtime. That generated file **already declares** these
+variables: `project`, `profile`, and `required_tags`.
+
+**Never re-declare `project`, `profile`, or `required_tags` in a stack's `variables.tf`** — doing
+so produces `Error: Duplicate variable declaration`. Reference them (`var.project`,
+`var.required_tags`, `var.profile`) but declare only stack-specific variables. Their values come
+from `common/common.tfvars` and `environments/<env>/*.tfvars`. See rule R007 in `iac-rules.md`.
+
 ## Core Principles
 
 ### Module Hierarchy
