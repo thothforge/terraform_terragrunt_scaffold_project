@@ -819,7 +819,7 @@ resource "aws_iam_role_policy" "terraform_prod_state" {
 variable "database_password" {
   type      = string
   sensitive = true
-  default   = "SuperSecret123!"  # ❌ Still stored in state
+  default   = "<hardcoded-password>"  # ❌ Still stored in state
 }
 ```
 

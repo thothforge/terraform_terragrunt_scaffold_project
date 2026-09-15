@@ -91,7 +91,7 @@ checkov -d . -o json > checkov-report.json
 # BAD: Secret in plaintext
 variable "database_password" {
   type    = string
-  default = "SuperSecret123!"  # ❌ Never do this
+  default = "<hardcoded-password>"  # ❌ Never do this — secret in plaintext
 }
 ```
 
@@ -397,10 +397,12 @@ resource "aws_secretsmanager_secret" "app_api_key" {
 ### Environment Variables
 
 ```bash
-# Never commit these
-export TF_VAR_database_password="secret123"
-export AWS_ACCESS_KEY_ID="AKIAIOSFODNN7EXAMPLE"
-export AWS_SECRET_ACCESS_KEY="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+# Never commit these — values shown as placeholders, not real credentials.
+# Prefer short-lived credentials (AWS SSO / IAM Identity Center, OIDC, or
+# IRSA) over long-lived access keys.
+export TF_VAR_database_password="<your-db-password>"
+export AWS_ACCESS_KEY_ID="<your-access-key-id>"
+export AWS_SECRET_ACCESS_KEY="<your-secret-access-key>"
 ```
 
 **In .gitignore:**
