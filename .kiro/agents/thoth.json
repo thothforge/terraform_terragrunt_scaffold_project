@@ -8,11 +8,9 @@
       "args": ["mcp", "server", "--stdio"]
     },
     "awslabs.aws-knowledge-mcp-server": {
-      "command": "uvx",
-      "args": ["awslabs.aws-knowledge-mcp-server@latest"],
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      }
+      "url": "https://knowledge-mcp.global.api.aws",
+      "type": "http",
+      "disabled": false
     },
     "git": {
       "command": "uvx",
@@ -25,7 +23,7 @@
         "run",
         "-i",
         "--rm",
-        "hashicorp/terraform-mcp-server"
+        "hashicorp/terraform-mcp-server:1.3.0"
       ]
     },
     "awslabs.aws-iac-mcp-server": {
