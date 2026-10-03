@@ -35,23 +35,40 @@ include "root" {
 }
 
 dependency "vpc" {
-  config_path = "../../../foundation/network/vpc"
+  # Anchor dependency paths to the Terragrunt root with get_parent_terragrunt_dir()
+  # — NOT hand-counted relative "../" paths (see R005).
+  config_path = "${get_parent_terragrunt_dir()}/stacks/foundation/network/vpc"
   mock_outputs = {
     vpc_id = "vpc-mock"
   }
   mock_outputs_merge_strategy_with_state = "shallow"
 }
 
-locals {
-  environment_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  env = local.environment_vars.locals.environment
-}
-
 inputs = {
   vpc_id = dependency.vpc.outputs.vpc_id
-  tags   = local.common_tags
+  tags   = var.required_tags
 }
 ```
+
+### Dependency path anchoring (R004.2)
+
+Dependency `config_path` values **MUST** be anchored to the Terragrunt root with
+`get_parent_terragrunt_dir()` and **MUST NOT** use hand-counted relative paths
+(`../../../...`). Relative paths are depth-fragile: a stack moving one level, or a
+cross-tree reference (e.g. `application` → `platform`), silently breaks the path
+and produces confusing "folder does not contain a terragrunt.hcl" errors.
+
+```hcl
+# ✅ Correct — depth-independent, consistent with root.hcl's own source/var-file paths
+config_path = "${get_parent_terragrunt_dir()}/stacks/platform/containers/ecs"
+
+# ❌ Wrong — hand-counted, breaks when the stack moves or references another tree
+config_path = "../../../platform/containers/ecs"
+```
+
+`get_parent_terragrunt_dir()` resolves to the directory of the parent config found
+by the `include` block (where `root.hcl` lives). Prefer it over `get_repo_root()`,
+which keys off the `.git` directory and breaks in monorepos or `.git`-less checkouts.
 
 ## Terraform Configuration Pattern Values for each Environment (R004.1)
 
@@ -79,7 +96,8 @@ environments/
 ## Dependency Management (R005)
 
 All dependencies **MUST** include:
-- `config_path` with relative path
+- `config_path` anchored with `get_parent_terragrunt_dir()` (R004.2) — never a
+  hand-counted relative `../` path
 - `mock_outputs` with realistic values
 - `mock_outputs_merge_strategy_with_state = "shallow"`
 
@@ -168,6 +186,40 @@ modules/
 - Tags variable with default empty map
 - Comprehensive README.md with examples
 
+## Security Group Ownership & Connectivity (R014)
+
+Security groups **MUST** follow a distributed-ownership model. There is **no**
+shared/foundation security-groups stack.
+
+### ✅ Rules
+- **Each component owns the SG it needs, in its own stack.** The stack that
+  creates a resource also creates its security group and outputs the id
+  (e.g. `platform/containers/ecs` → `control_plane_security_group_id`,
+  `platform/data/efs` → `efs_security_group_id`, `platform/data/rds` →
+  `rds_security_group_id`, `application/compute/alb` → `alb_security_group_id`,
+  `application/devsecops/jenkins` → `build_agent_security_group_id`). New DevOps
+  tools own their SG in their own stack.
+- **Component SGs set `enable_exclusive_rules = false`** (security-group module
+  v6+) so cross-component rules added elsewhere are not revoked on the next apply.
+- **Self-contained ingress** (e.g. the public ALB HTTPS/HTTP from CIDRs) stays on
+  the owning SG. **Cross-component SG-to-SG rules** live ONLY in the dedicated
+  `application/connectivity` stack.
+- The **connectivity stack** takes each SG id via Terragrunt `dependency` blocks
+  (anchored per R004.2) and creates the `aws_vpc_security_group_ingress_rule`
+  resources between components.
+
+### ❌ Never do
+- Create a single shared stack that owns every SG with inline cross-references
+  (causes module cycles and poor scaling).
+- Put a mutual SG-to-SG reference inline in two component stacks (Terraform
+  rejects the module cycle). Use the connectivity stack instead.
+
+### Adding a new tool
+1. Create the tool's SG in its own stack (`enable_exclusive_rules = false`),
+   output its id.
+2. Add a `dependency` block + input and the ingress rule(s) in
+   `application/connectivity`.
+
 ## Prohibited Practices
 
 ### ❌ Never Do:
@@ -178,6 +230,8 @@ modules/
 - Put workloads in public subnets
 - Use unencrypted storage
 - Skip mandatory tags
+- Use hand-counted relative `../` dependency `config_path`s (R004.2)
+- Create a shared security-groups stack with inline cross-references (R014)
 
 ### ✅ Always Do:
 - Use terraform-aws-modules first
@@ -186,6 +240,8 @@ modules/
 - Follow terragrunt patterns
 - Apply comprehensive tagging
 - Declare dependencies with mocks
+- Anchor dependency `config_path`s with `get_parent_terragrunt_dir()` (R004.2)
+- Let each component own its SG; wire cross-SG rules in `application/connectivity` (R014)
 - Implement security-first configurations
 
 ## Enforcement Actions
